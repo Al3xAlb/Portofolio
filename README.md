@@ -102,13 +102,19 @@ database, storage, and Edge Functions.
 The publishable key is included in the browser bundle by design. Never put a
 Supabase secret or service-role key in a `VITE_*` variable.
 
-### One-time Supabase/Lovable and OAuth setup
+### One-time Supabase and Google OAuth setup
 
-In the existing project's authentication URL configuration, set the deployed
-site URL to `https://al3xalb.github.io/Portofolio/` and allow the
-redirect URL `https://al3xalb.github.io/Portofolio/admin`. Keep the
-Google provider's configured Supabase/Lovable callback URI as-is; the app URL is
-the post-login redirect, not the provider callback endpoint.
+In Supabase **Authentication → URL Configuration**, set the Site URL to
+`https://al3xalb.github.io/Portofolio/` and add
+`https://al3xalb.github.io/Portofolio/admin` to the allowed redirect URLs.
+Enable the Google provider in Supabase Auth with your Google OAuth client ID and
+secret. In Google Cloud Console, authorize this callback URI, replacing
+`<project-ref>` with the project reference from the Supabase project URL:
+`https://<project-ref>.supabase.co/auth/v1/callback`.
+
+The app sends users to Supabase Auth for Google sign-in and returns them to the
+Pages `/admin` route. The Lovable preview sign-in broker is not used on GitHub
+Pages.
 
 The build uses `/Portofolio/` as its asset and router base. For local
 development, the default remains `/`. To build locally with the Pages base path:

@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { lovable } from "@/integrations/lovable/index";
+import { supabase } from "@/integrations/supabase/client";
 import { toast } from "sonner";
 
 const GoogleLogo = () => (
@@ -17,16 +17,19 @@ const GoogleButton = () => {
 
   const signIn = async () => {
     setBusy(true);
-    const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: `${window.location.origin}${import.meta.env.BASE_URL}admin`,
-    });
-    if (result.error) {
+    try {
+      const { error } = await supabase.auth.signInWithOAuth({
+        provider: "google",
+        options: {
+          redirectTo: `${window.location.origin}${import.meta.env.BASE_URL}admin`,
+        },
+      });
+      if (error) throw error;
+    } catch (error) {
+      console.error("Google sign-in failed:", error);
       toast.error("Google sign-in didn't complete. Please try again.");
       setBusy(false);
-      return;
     }
-    if (result.redirected) return;
-    setBusy(false);
   };
 
   return (
