@@ -34,13 +34,12 @@ jobs:
 
       - name: Build site
         run: |
-          test -n "$VITE_SUPABASE_URL" || { echo "::error::Set the VITE_SUPABASE_URL repository variable."; exit 1; }
           test -n "$VITE_SUPABASE_PUBLISHABLE_KEY" || { echo "::error::Set the VITE_SUPABASE_PUBLISHABLE_KEY repository secret."; exit 1; }
           npm run build
           cp dist/index.html dist/404.html
         env:
           VITE_BASE_PATH: /Portofolio/
-          VITE_SUPABASE_URL: ${{ vars.VITE_SUPABASE_URL }}
+          VITE_SUPABASE_URL: https://hwjdaxxmuyzautvmjqdh.supabase.co
           VITE_SUPABASE_PUBLISHABLE_KEY: ${{ secrets.VITE_SUPABASE_PUBLISHABLE_KEY }}
 
       - name: Upload Pages artifact

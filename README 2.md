@@ -95,27 +95,25 @@ database, storage, and Edge Functions.
 
 1. In the repository, open **Settings → Pages** and set the source to **GitHub Actions**.
 2. Under **Settings → Secrets and variables → Actions**, add:
-   - Repository variable `VITE_SUPABASE_URL`: the existing Supabase project URL.
-   - Repository secret `VITE_SUPABASE_PUBLISHABLE_KEY`: the project's publishable/anon key.
+   - Repository secret `VITE_SUPABASE_PUBLISHABLE_KEY`: the publishable/anon key from project `hwjdaxxmuyzautvmjqdh`.
 3. Push to `main` or run **Deploy to GitHub Pages** from the **Actions** tab.
 
 The publishable key is included in the browser bundle by design. Never put a
 Supabase secret or service-role key in a `VITE_*` variable.
 
-### One-time Supabase/Lovable and OAuth setup
+### One-time Supabase authentication setup
 
-In the existing project's authentication URL configuration, set the deployed
-site URL to `https://al3xalb.github.io/Portofolio/` and allow the
-redirect URL `https://al3xalb.github.io/Portofolio/admin`. Keep the
-Google provider's configured Supabase/Lovable callback URI as-is; the app URL is
-the post-login redirect, not the provider callback endpoint.
+The app uses Supabase project `hwjdaxxmuyzautvmjqdh`. In that project's
+authentication settings, enable the Email provider and disable public signups.
+Set the deployed site URL to `https://al3xalb.github.io/Portofolio/`.
+Admin access is granted separately through the `user_roles` table.
 
 The build uses `/Portofolio/` as its asset and router base. For local
 development, the default remains `/`. To build locally with the Pages base path:
 
 ```sh
 VITE_BASE_PATH=/Portofolio/ \
-VITE_SUPABASE_URL=https://your-project.supabase.co \
+VITE_SUPABASE_URL=https://hwjdaxxmuyzautvmjqdh.supabase.co \
 VITE_SUPABASE_PUBLISHABLE_KEY=your-publishable-key \
 npm run build
 ```
