@@ -66,6 +66,8 @@ export type Database = {
       }
       event_files: {
         Row: {
+          caption: string | null
+          caption_generated_at: string | null
           created_at: string
           event_id: string
           file_name: string
@@ -76,6 +78,8 @@ export type Database = {
           storage_path: string
         }
         Insert: {
+          caption?: string | null
+          caption_generated_at?: string | null
           created_at?: string
           event_id: string
           file_name: string
@@ -86,6 +90,8 @@ export type Database = {
           storage_path: string
         }
         Update: {
+          caption?: string | null
+          caption_generated_at?: string | null
           created_at?: string
           event_id?: string
           file_name?: string

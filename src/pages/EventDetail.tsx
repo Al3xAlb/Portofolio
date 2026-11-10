@@ -24,7 +24,7 @@ const EventDetail = () => {
       }
       const { data: rows } = await supabase
         .from("event_files")
-        .select("id, storage_path, file_name, mime_type, size_bytes")
+        .select("id, storage_path, file_name, mime_type, size_bytes, caption")
         .eq("event_id", id)
         .order("sort_order");
       const urls = await signPaths((rows ?? []).map((r) => r.storage_path));
@@ -35,6 +35,7 @@ const EventDetail = () => {
           file_name: r.file_name,
           mime_type: r.mime_type,
           size_bytes: r.size_bytes,
+          caption: r.caption,
           url: urls[r.storage_path] ?? null,
         })),
       );

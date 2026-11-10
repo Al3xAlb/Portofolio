@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import { Globe, Lock, RefreshCw, Trash2 } from "lucide-react";
+import { Globe, Lock, RefreshCw, Sparkles, Trash2 } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Button } from "@/components/ui/button";
 import {
@@ -16,6 +16,7 @@ import {
 } from "@/components/ui/alert-dialog";
 import { toast } from "sonner";
 import AccessKeyDisplay from "./AccessKeyDisplay";
+import CaptionsDialog from "./CaptionsDialog";
 import { EVENT_BUCKET, EventRow, formatEventDate, generateAccessKey, signPaths } from "@/lib/events";
 
 type AdminEvent = EventRow & {
@@ -27,6 +28,7 @@ const AdminEventList = ({ refreshToken }: { refreshToken: number }) => {
   const [events, setEvents] = useState<AdminEvent[]>([]);
   const [covers, setCovers] = useState<Record<string, string>>({});
   const [loading, setLoading] = useState(true);
+  const [captionEvent, setCaptionEvent] = useState<AdminEvent | null>(null);
 
   const load = async () => {
     const { data } = await supabase
@@ -86,6 +88,12 @@ const AdminEventList = ({ refreshToken }: { refreshToken: number }) => {
     );
 
   return (
+    <>
+    <CaptionsDialog
+      eventId={captionEvent?.id ?? null}
+      eventTitle={captionEvent?.title ?? ""}
+      onOpenChange={(open) => !open && setCaptionEvent(null)}
+    />
     <ul className="space-y-3">
       {events.map((ev) => (
         <li key={ev.id} className="flex flex-col gap-4 rounded-3xl bg-card p-4 md:flex-row md:items-center">
@@ -111,6 +119,9 @@ const AdminEventList = ({ refreshToken }: { refreshToken: number }) => {
             )}
           </div>
           <div className="flex flex-wrap gap-2">
+            <Button variant="ghost" size="sm" className="rounded-full" onClick={() => setCaptionEvent(ev)}>
+              <Sparkles size={14} /> Captions
+            </Button>
             {!ev.is_private && (
               <Button asChild variant="ghost" size="sm" className="rounded-full">
                 <Link to={`/events/${ev.id}`}>View</Link>
@@ -146,6 +157,7 @@ const AdminEventList = ({ refreshToken }: { refreshToken: number }) => {
         </li>
       ))}
     </ul>
+    </>
   );
 };
 

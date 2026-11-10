@@ -1,6 +1,6 @@
 import { useRef, useState } from "react";
 import { z } from "zod";
-import { FolderUp, ImagePlus, Lock, X } from "lucide-react";
+import { FolderUp, ImagePlus, Lock, Sparkles, X } from "lucide-react";
 import { supabase } from "@/integrations/supabase/client";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
@@ -9,6 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { Label } from "@/components/ui/label";
 import { Progress } from "@/components/ui/progress";
 import { toast } from "sonner";
+import { generateCaptions } from "@/lib/captions";
 import { ACCEPTED_TYPES, EVENT_BUCKET, MAX_FILE_BYTES, formatBytes, generateAccessKey, isImage } from "@/lib/events";
 
 const schema = z.object({
@@ -30,6 +31,8 @@ const NewEventForm = ({ onCreated }: NewEventFormProps) => {
   const [description, setDescription] = useState("");
   const [eventDate, setEventDate] = useState("");
   const [isPrivate, setIsPrivate] = useState(false);
+  const [autoCaption, setAutoCaption] = useState(true);
+  const [phase, setPhase] = useState<"upload" | "captions">("upload");
   const [files, setFiles] = useState<File[]>([]);
   const [skipped, setSkipped] = useState(0);
   const [progress, setProgress] = useState<number | null>(null);
@@ -126,6 +129,18 @@ const NewEventForm = ({ onCreated }: NewEventFormProps) => {
     }
 
     if (failed) toast.error(`${failed} file${failed > 1 ? "s" : ""} couldn't be uploaded.`);
+
+    if (autoCaption && rows.some((r) => isImage(r.mime_type))) {
+      setPhase("captions");
+      setProgress(0);
+      const result = await generateCaptions(event.id, "missing", (p) =>
+        setProgress(p.total ? Math.round(((p.done + p.failed) / p.total) * 100) : 0),
+      );
+      if (result.stoppedMessage) toast.error(`Captions: ${result.stoppedMessage} You can finish them later from "Captions".`);
+      else if (result.failed) toast.error(`${result.failed} photo${result.failed > 1 ? "s" : ""} couldn't be captioned. Try again from "Captions".`);
+      setPhase("upload");
+    }
+
     onCreated({ title: parsed.data.title, accessKey });
     reset();
   };
@@ -203,17 +218,31 @@ const NewEventForm = ({ onCreated }: NewEventFormProps) => {
         </span>
       </label>
 
+      <label className="flex cursor-pointer items-start gap-3 rounded-xl bg-background p-4">
+        <Checkbox checked={autoCaption} onCheckedChange={(v) => setAutoCaption(v === true)} className="mt-0.5" disabled={uploading} />
+        <span>
+          <span className="flex items-center gap-1.5 text-sm font-medium">
+            <Sparkles size={14} /> Write photo captions with AI
+          </span>
+          <span className="mt-0.5 block text-xs text-muted-foreground">
+            Lovable AI writes a short, accessible description for each photo. You can review and edit them afterwards.
+          </span>
+        </span>
+      </label>
+
       {error && <p className="text-sm text-destructive">{error}</p>}
 
       {uploading && (
         <div className="space-y-2">
           <Progress value={progress} className="h-1.5" />
-          <p className="text-xs text-muted-foreground">Uploading… {progress}% — keep this page open.</p>
+          <p className="text-xs text-muted-foreground">
+            {phase === "captions" ? `Writing captions… ${progress}%` : `Uploading… ${progress}%`} — keep this page open.
+          </p>
         </div>
       )}
 
       <Button type="submit" className="h-12 rounded-full px-8" disabled={uploading}>
-        {uploading ? "Uploading…" : "Upload & create event"}
+        {uploading ? (phase === "captions" ? "Writing captions…" : "Uploading…") : "Upload & create event"}
       </Button>
     </form>
   );
