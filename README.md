@@ -82,3 +82,40 @@ cd <repository-name>
 npm i
 npm run dev
 ```
+
+## Deploy to GitHub Pages
+
+The site is deployed from the `main` branch to
+<https://al3xalb.github.io/little-masonry-studio/> by the GitHub Actions workflow
+in `.github/workflows/deploy-pages.yml`. The workflow builds the static frontend
+and publishes it to Pages; Supabase/Lovable continues to provide authentication,
+database, storage, and Edge Functions.
+
+### One-time GitHub setup
+
+1. In the repository, open **Settings → Pages** and set the source to **GitHub Actions**.
+2. Under **Settings → Secrets and variables → Actions**, add:
+   - Repository variable `VITE_SUPABASE_URL`: the existing Supabase project URL.
+   - Repository secret `VITE_SUPABASE_PUBLISHABLE_KEY`: the project's publishable/anon key.
+3. Push to `main` or run **Deploy to GitHub Pages** from the **Actions** tab.
+
+The publishable key is included in the browser bundle by design. Never put a
+Supabase secret or service-role key in a `VITE_*` variable.
+
+### One-time Supabase/Lovable and OAuth setup
+
+In the existing project's authentication URL configuration, set the deployed
+site URL to `https://al3xalb.github.io/little-masonry-studio/` and allow the
+redirect URL `https://al3xalb.github.io/little-masonry-studio/admin`. Keep the
+Google provider's configured Supabase/Lovable callback URI as-is; the app URL is
+the post-login redirect, not the provider callback endpoint.
+
+The build uses `/little-masonry-studio/` as its asset and router base. For local
+development, the default remains `/`. To build locally with the Pages base path:
+
+```sh
+VITE_BASE_PATH=/little-masonry-studio/ \
+VITE_SUPABASE_URL=https://your-project.supabase.co \
+VITE_SUPABASE_PUBLISHABLE_KEY=your-publishable-key \
+npm run build
+```

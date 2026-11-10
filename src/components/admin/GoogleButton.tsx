@@ -18,7 +18,7 @@ const GoogleButton = () => {
   const signIn = async () => {
     setBusy(true);
     const result = await lovable.auth.signInWithOAuth("google", {
-      redirect_uri: `${window.location.origin}/admin`,
+      redirect_uri: `${window.location.origin}${import.meta.env.BASE_URL}admin`,
     });
     if (result.error) {
       toast.error("Google sign-in didn't complete. Please try again.");
