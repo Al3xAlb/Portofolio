@@ -69,13 +69,14 @@ const FloatingNav = () => {
                 <p className="text-xs uppercase tracking-widest text-muted-foreground mb-2">
                   Say Hi!
                 </p>
-                <a 
-                  href="mailto:hello@jordanstudio.com"
+                <Link
+                  to="/about#contact"
+                  onClick={() => setContactOpen(false)}
                   className="flex items-center gap-2 text-sm hover:opacity-70 transition-opacity"
                 >
                   <Mail size={14} />
-                  hello@jordanstudio.com
-                </a>
+                  Send me a message
+                </Link>
               </div>
 
               {/* Follow Me Section */}
