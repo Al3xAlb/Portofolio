@@ -6,7 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Dialog, DialogContent, DialogDescription, DialogHeader, DialogTitle } from "@/components/ui/dialog";
 import { supabase } from "@/integrations/supabase/client";
 import { useAdminAuth } from "@/hooks/useAdminAuth";
-import GoogleButton from "@/components/admin/GoogleButton";
+import EmailPasswordForm from "@/components/admin/EmailPasswordForm";
 import NewEventForm from "@/components/admin/NewEventForm";
 import AdminEventList from "@/components/admin/AdminEventList";
 import AccessKeyDisplay from "@/components/admin/AccessKeyDisplay";
@@ -30,7 +30,7 @@ const Admin = () => {
             <h1 className="text-3xl font-semibold">Admin</h1>
             <p className="mt-2 text-sm text-muted-foreground">Sign in to upload and manage your events.</p>
             <div className="mt-8 flex justify-center">
-              <GoogleButton />
+              <EmailPasswordForm />
             </div>
           </div>
         ) : !isAdmin ? (
