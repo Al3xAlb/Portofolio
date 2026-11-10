@@ -7,6 +7,7 @@ import ProjectIndex from "./pages/ProjectIndex";
 import About from "./pages/About";
 import Project from "./pages/Project";
 import NotFound from "./pages/NotFound";
+import SplashScreen from "./components/SplashScreen";
 
 const queryClient = new QueryClient();
 
@@ -15,6 +16,7 @@ const App = () => (
     <TooltipProvider>
       <Toaster />
       <Sonner />
+      <SplashScreen />
       <BrowserRouter>
         <Routes>
           <Route path="/" element={<ProjectIndex />} />

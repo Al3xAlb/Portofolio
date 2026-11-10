@@ -3,6 +3,7 @@ import { useLocation } from "react-router-dom";
 import Navbar from "@/components/Navbar";
 import FloatingNav from "@/components/FloatingNav";
 import ScrollRevealText from "@/components/ScrollRevealText";
+import ContactForm from "@/components/ContactForm";
 import { Mail, MapPin, Instagram, Linkedin, Dribbble } from "lucide-react";
 
 const About = () => {
@@ -65,14 +66,14 @@ const About = () => {
         <section className="min-h-[60vh] max-h-[70vh] flex flex-col justify-center px-6 pt-24 pb-8">
           <div className="max-w-[95%]">
             <ScrollRevealText 
-              text="Jordan Studio is an independent creative practice focused on graphic design, art direction, and visual identity systems that communicate with clarity and purpose."
+              text="Alex Alb is an independent creative practice focused on graphic design, art direction, and visual identity systems that communicate with clarity and purpose."
               className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl xl:text-7xl leading-[1.1] font-display"
             />
           </div>
         </section>
 
         {/* Bottom Info Section - Horizontal Layout */}
-        <section className="px-6 pb-32" id="contact">
+        <section className="px-6 pb-16">
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 lg:gap-12 fade-in-up">
             {/* Selected Clients */}
             <div>
@@ -124,11 +125,11 @@ const About = () => {
               </h3>
               <div className="space-y-2">
                 <a
-                  href="mailto:hello@jordanstudio.com"
+                  href="#contact"
                   className="text-sm hover:opacity-70 transition-opacity flex items-center gap-2"
                 >
                   <Mail size={14} />
-                  hello@jordanstudio.com
+                  Send me a message
                 </a>
                 <p className="text-sm flex items-center gap-2 text-muted-foreground">
                   <MapPin size={14} />
@@ -150,6 +151,18 @@ const About = () => {
                 </div>
               </div>
             </div>
+          </div>
+        </section>
+        {/* Contact Form */}
+        <section id="contact" className="px-6 pb-32 scroll-mt-24">
+          <div className="grid gap-10 lg:grid-cols-[1fr_1.4fr] lg:gap-16 border-t border-border pt-12">
+            <div>
+              <h2 className="text-3xl md:text-5xl font-semibold tracking-tight">Let's work together</h2>
+              <p className="mt-4 max-w-sm text-muted-foreground">
+                Have a project in mind or just want to say hi? Drop me a note and I'll reply as soon as I can.
+              </p>
+            </div>
+            <ContactForm />
           </div>
         </section>
       </main>

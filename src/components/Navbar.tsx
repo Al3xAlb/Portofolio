@@ -51,9 +51,9 @@ const Navbar = ({ selectedCategory, onCategoryChange }: NavbarProps) => {
             {/* Logo */}
             <Link
               to="/"
-              className="text-lg font-medium tracking-tight hover:opacity-70 transition-opacity duration-300"
+              className="font-display text-lg font-semibold tracking-tight hover:opacity-70 transition-opacity duration-300"
             >
-              Jordan Studio
+              Alex Alb
             </Link>
 
             {/* Center: Category Filters (Desktop only, only on Home page) */}
