@@ -86,7 +86,7 @@ npm run dev
 ## Deploy to GitHub Pages
 
 The site is deployed from the `main` branch to
-<https://al3xalb.github.io/little-masonry-studio/> by the GitHub Actions workflow
+<https://al3xalb.github.io/Portofolio/> by the GitHub Actions workflow
 in `.github/workflows/deploy-pages.yml`. The workflow builds the static frontend
 and publishes it to Pages; Supabase/Lovable continues to provide authentication,
 database, storage, and Edge Functions.
@@ -105,16 +105,16 @@ Supabase secret or service-role key in a `VITE_*` variable.
 ### One-time Supabase/Lovable and OAuth setup
 
 In the existing project's authentication URL configuration, set the deployed
-site URL to `https://al3xalb.github.io/little-masonry-studio/` and allow the
-redirect URL `https://al3xalb.github.io/little-masonry-studio/admin`. Keep the
+site URL to `https://al3xalb.github.io/Portofolio/` and allow the
+redirect URL `https://al3xalb.github.io/Portofolio/admin`. Keep the
 Google provider's configured Supabase/Lovable callback URI as-is; the app URL is
 the post-login redirect, not the provider callback endpoint.
 
-The build uses `/little-masonry-studio/` as its asset and router base. For local
+The build uses `/Portofolio/` as its asset and router base. For local
 development, the default remains `/`. To build locally with the Pages base path:
 
 ```sh
-VITE_BASE_PATH=/little-masonry-studio/ \
+VITE_BASE_PATH=/Portofolio/ \
 VITE_SUPABASE_URL=https://your-project.supabase.co \
 VITE_SUPABASE_PUBLISHABLE_KEY=your-publishable-key \
 npm run build
