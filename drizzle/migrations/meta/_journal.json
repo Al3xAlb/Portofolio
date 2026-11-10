@@ -29,6 +29,13 @@
       "when": 1794298558606,
       "tag": "0003_lock_admin_to_owner",
       "breakpoints": true
+    },
+    {
+      "idx": 4,
+      "version": "7",
+      "when": 1794308846543,
+      "tag": "0004_manage_portfolio_photos",
+      "breakpoints": true
     }
   ]
 }

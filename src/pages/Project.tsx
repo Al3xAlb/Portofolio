@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { useParams, Link, useNavigate } from "react-router-dom";
-import { getProjectById, projects } from "@/data/projects";
+import { usePortfolioProjects } from "@/hooks/usePortfolioProjects";
 import Navbar from "@/components/Navbar";
 import FloatingNav from "@/components/FloatingNav";
 import { ArrowLeft, ArrowRight } from "lucide-react";
@@ -8,7 +8,8 @@ import { ArrowLeft, ArrowRight } from "lucide-react";
 const Project = () => {
   const { id } = useParams<{ id: string }>();
   const navigate = useNavigate();
-  const project = getProjectById(id || "");
+  const { projects } = usePortfolioProjects();
+  const project = projects.find((item) => item.id === id);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -45,11 +46,13 @@ const Project = () => {
         {/* Hero Image */}
         <section className="pt-20 px-4 md:px-6">
           <div className="w-full h-[40vh] md:h-[80vh] overflow-hidden rounded-2xl md:rounded-3xl fade-in-up">
-            <img
-              src={project.images[0]}
-              alt={project.title}
-              className="w-full h-full object-cover"
-            />
+            {project.images[0] && (
+              <img
+                src={project.images[0]}
+                alt={project.title}
+                className="w-full h-full object-cover"
+              />
+            )}
           </div>
         </section>
 

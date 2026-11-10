@@ -1,10 +1,11 @@
 import { useState, useMemo, useEffect, useRef } from "react";
 import { Link } from "react-router-dom";
-import { projects } from "@/data/projects";
+import { usePortfolioProjects } from "@/hooks/usePortfolioProjects";
 import Navbar from "@/components/Navbar";
 import FloatingNav from "@/components/FloatingNav";
 
 const ProjectIndex = () => {
+  const { projects } = usePortfolioProjects();
   const [selectedCategory, setSelectedCategory] = useState<string>("everything");
   const sectionRef = useRef<HTMLElement>(null);
   const [isVisible, setIsVisible] = useState(false);
@@ -33,7 +34,7 @@ const ProjectIndex = () => {
     return projects.filter((project) =>
       project.tags.some((tag) => tag.toLowerCase() === selectedCategory.toLowerCase())
     );
-  }, [selectedCategory]);
+  }, [selectedCategory, projects]);
 
   return (
     <>
@@ -59,12 +60,14 @@ const ProjectIndex = () => {
                 style={{ transitionDelay: `${index * 50}ms` }}
               >
                 <div className="relative overflow-hidden rounded-2xl bg-muted aspect-[4/5]">
-                  <img
-                    src={project.images[0]}
-                    alt={project.title}
-                    className="w-full h-full object-cover"
-                    loading="lazy"
-                  />
+                  {project.images[0] && (
+                    <img
+                      src={project.images[0]}
+                      alt={project.title}
+                      className="w-full h-full object-cover"
+                      loading="lazy"
+                    />
+                  )}
                 </div>
 
                 <div className="pt-2 pb-3">
@@ -93,12 +96,14 @@ const ProjectIndex = () => {
                 style={{ transitionDelay: `${index * 80}ms` }}
               >
                 <div className="relative overflow-hidden rounded-3xl bg-muted">
-                  <img
-                    src={project.images[0]}
-                    alt={project.title}
-                    className="w-full h-auto object-cover"
-                    loading="lazy"
-                  />
+                  {project.images[0] && (
+                    <img
+                      src={project.images[0]}
+                      alt={project.title}
+                      className="w-full h-auto object-cover"
+                      loading="lazy"
+                    />
+                  )}
                 </div>
 
                 <div className="pt-3 pb-4">

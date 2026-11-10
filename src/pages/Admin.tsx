@@ -10,6 +10,7 @@ import GoogleButton from "@/components/admin/GoogleButton";
 import NewEventForm from "@/components/admin/NewEventForm";
 import AdminEventList from "@/components/admin/AdminEventList";
 import AccessKeyDisplay from "@/components/admin/AccessKeyDisplay";
+import AdminPortfolioPhotos from "@/components/admin/AdminPortfolioPhotos";
 
 const Admin = () => {
   const { user, isAdmin, loading } = useAdminAuth();
@@ -68,6 +69,8 @@ const Admin = () => {
                 setRefreshToken((t) => t + 1);
               }}
             />
+
+            <AdminPortfolioPhotos />
 
             <h2 className="mt-14 mb-4 text-xs uppercase tracking-widest text-muted-foreground">All events</h2>
             <AdminEventList refreshToken={refreshToken} />
