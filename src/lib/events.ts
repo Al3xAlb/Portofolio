@@ -18,6 +18,7 @@ export interface GalleryFile {
   file_name: string;
   mime_type: string;
   size_bytes: number;
+  caption?: string | null;
   url: string | null;
   download_url?: string | null;
 }

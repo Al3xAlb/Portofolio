@@ -38,11 +38,11 @@ const GalleryGrid = ({ files, allowDownload = false }: GalleryGridProps) => {
         <div className="columns-2 lg:columns-3 gap-4">
           {images.map((file) => (
             <figure key={file.id} className="group relative mb-4 break-inside-avoid overflow-hidden rounded-2xl bg-muted">
-              <button type="button" onClick={() => setOpen(file)} className="block w-full" aria-label={`Open ${file.file_name}`}>
+              <button type="button" onClick={() => setOpen(file)} className="block w-full" aria-label={`Open ${file.caption || file.file_name}`}>
                 {file.url && (
                   <img
                     src={file.url}
-                    alt={file.file_name}
+                    alt={file.caption || file.file_name}
                     loading="lazy"
                     className="h-auto w-full object-cover transition-transform duration-700 group-hover:scale-[1.03]"
                   />
@@ -94,10 +94,13 @@ const GalleryGrid = ({ files, allowDownload = false }: GalleryGridProps) => {
 
       <Dialog open={!!open} onOpenChange={(v) => !v && setOpen(null)}>
         <DialogContent className="max-w-5xl border-none bg-background p-2 sm:rounded-2xl [&>button]:hidden">
-          <DialogTitle className="sr-only">{open?.file_name}</DialogTitle>
-          {open?.url && <img src={open.url} alt={open.file_name} className="max-h-[80vh] w-full rounded-xl object-contain" />}
+          <DialogTitle className="sr-only">{open?.caption || open?.file_name}</DialogTitle>
+          {open?.url && <img src={open.url} alt={open.caption || open.file_name} className="max-h-[75vh] w-full rounded-xl object-contain" />}
           <div className="flex items-center justify-between gap-3 px-2 pb-1">
-            <p className="truncate text-sm text-muted-foreground">{open?.file_name}</p>
+            <div className="min-w-0">
+              {open?.caption && <p className="text-sm text-foreground">{open.caption}</p>}
+              <p className="truncate text-xs text-muted-foreground">{open?.file_name}</p>
+            </div>
             <div className="flex items-center gap-2">
               {allowDownload && open && <DownloadLink file={open} />}
               <Button variant="ghost" size="icon" onClick={() => setOpen(null)} aria-label="Close">

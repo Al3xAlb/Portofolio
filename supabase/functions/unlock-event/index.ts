@@ -57,7 +57,7 @@ Deno.serve(async (req) => {
 
   const { data: files, error: filesError } = await supabase
     .from("event_files")
-    .select("id, storage_path, file_name, mime_type, size_bytes, sort_order")
+    .select("id, storage_path, file_name, mime_type, size_bytes, sort_order, caption")
     .eq("event_id", event.id)
     .order("sort_order", { ascending: true });
   if (filesError) return json({ error: "Something went wrong. Please try again." }, 500);
@@ -74,6 +74,7 @@ Deno.serve(async (req) => {
         file_name: f.file_name,
         mime_type: f.mime_type,
         size_bytes: f.size_bytes,
+        caption: f.caption,
         url: view.data?.signedUrl ?? null,
         download_url: download.data?.signedUrl ?? null,
       };
