@@ -8,6 +8,13 @@
       "when": 1794295973317,
       "tag": "0000_create_contact_messages",
       "breakpoints": true
+    },
+    {
+      "idx": 1,
+      "version": "7",
+      "when": 1794296428946,
+      "tag": "0001_events_galleries_and_admin",
+      "breakpoints": true
     }
   ]
 }
