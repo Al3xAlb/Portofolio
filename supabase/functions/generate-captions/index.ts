@@ -135,7 +135,7 @@ Deno.serve(async (req) => {
               role: "user",
               content: [
                 { type: "text", text: `Gallery: "${event.title}". Write the alt text for this photo.` },
-                { type: "image", image: new URL(signed.signedUrl) },
+                { type: "file", data: new URL(signed.signedUrl), mediaType: file.mime_type },
               ],
             },
           ],
